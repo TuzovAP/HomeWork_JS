@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+</head>
+
+<body>
+    <script>
+        // 3.1 С помощью цикла while вывести все простые числа в промежутке от 0 до 100.
+        var nums = 0;
+        while (nums <= 100) {
+            var check = true;
+            for (var i = 2; i < nums; i++) {
+                if (nums % i == 0) {
+                    check = false;
+                    break;
+                }
+            }
+            if (check) console.log(nums);
+            nums++;
+        }
+
+        // 3.2 С этого урока начинаем работать с функционалом интернет-магазина. 
+        // Предположим, есть сущность корзины. Нужно реализовать функционал подсчета стоимости корзины
+        // в зависимости от находящихся в ней товаров. Товары в корзине хранятся в массиве
+        const basketItems = ['Телефон', 'Ноутбук', 'Кофеварка', 'Чайник'];
+        const ItemsCost = [['Телефон', 200], ['Ноутбук', 800], ['Кофеварка', 150], ['Чайник', 50]];
+        // функция возврата стоимости одного товара.
+        const getItemPrice = (item, array) => {
+            const items = [];
+            const costs = [];
+            for (let i = 0; i < array.length; i++) {
+                items.push(array[i][0]);
+                costs.push(array[i][1]);
+            }
+            return costs[items.indexOf(item)];
+        };
+
+        const countBasketPrice = (basketArr, costArr) => {
+            var totalCost = 0;
+            for (var i = 0; i < basketArr.length; i++) {
+                totalCost += getItemPrice(basketArr[i], costArr);
+            }
+            return totalCost;
+        };
+        console.log('Массив корзины: ' + basketItems);
+        console.log('Вывод полной стоимости корзины: ' + countBasketPrice(basketItems, ItemsCost));
+
+        // 3.3 *Вывести с помощью цикла for числа от 0 до 9, не используя тело цикла.
+        for (let i = 0; i < 10; console.log(i++)) { }
+
+        // 3.4 *Нарисовать пирамиду с помощью console.log
+        var arr = [];
+        var end = 0;
+        while (end < 20) {
+            end++;
+            arr.push('x');
+            console.log(arr);
+        }
+    </script>
+</body>
+
+</html>

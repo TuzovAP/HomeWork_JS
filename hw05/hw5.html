@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+</head>
+
+<body>
+    <script>
+        // 5.1 Создать функцию, генерирующую шахматную доску. Можно использовать любые html-теги. 
+        // Доска должна быть верно разлинована на черные и белые ячейки. Строки должны нумероваться числами от 1 до 8, 
+        // столбцы — латинскими буквами A, B, C, D, E, F, G, H.
+
+        function chessboard() {
+            const board = document.querySelector('#board');
+            const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+            for (var i = 0; i <= 9; i++) {
+                var row = document.createElement('div');
+                for (var j = 0; j <= 9; j++) {
+                    var col = document.createElement('div');
+                    row.append(col);
+                    if (i != 0 && i != 9) {
+                        if (j != 0 && j != 9) {
+                            if (i % 2 == j % 2) {
+                                col.className = 'black';
+                            };
+                        };
+                    };
+                    if (i == 0 || i == 9) {
+                        if (j != 0 && j != 9) {
+                            col.textContent = j;
+                        };
+                    };
+                    if (j == 0 || j == 9) {
+                        if (i != 0 && i != 9) {
+                            col.textContent = letters[i - 1];
+                        };
+                    };
+                    if (i == 0 || i == 9 || j == 0 || j == 9) {
+                        col.className = 'wood';
+                    };
+                };
+                board.append(row);
+                row.className = 'outer';
+            };
+
+        };
+
+
+        // 5.2 Сделать генерацию корзины динамической
+
+        const main = document.querySelector('#main');
+
+        let shoppingCart = []
+        let emptyBasket = '<p>Корзина пуста</p>'
+
+        function Item(product, image, price, quantity) {
+            this.product = product;
+            this.image = `img/${image}.png`;
+            this.price = price;
+            this.quantity = quantity
+        }
+
+        shoppingCart.push(
+            new Item('Пылесос', 'product_imge_1', 15, 2)
+        );
+        shoppingCart.push(
+            new Item('Телевизор', 'product_imge_2', 80, 5, 10)
+        );
+        shoppingCart.push(
+            new Item('Утюг', 'product_imge_3', 10, 6)
+        );
+        shoppingCart.push(
+            new Item('Чайник', 'product_imge_4', 15, 1)
+        );
+        shoppingCart.push(
+            new Item('Плита', 'product_imge_5', 30, 10, 15)
+        );
+
+
+        // выводим перечень товаров в корзине, если корзина не пуста
+        if (shoppingCart == 0) {
+            main.insertAdjacentHTML('beforeend', `<div class="prod_item total">${emptyBasket}</div>`);
+        } else {
+            for (const iterator of shoppingCart) {
+                main.insertAdjacentHTML('beforeend',
+                    `<div class="prod_item">
+        <span>Товар - ${iterator.product}</span> 
+        <span>Цена товара - ${iterator.price} руб</span>
+        <span>Количество - ${iterator.quantity}</span>
+        <span><img src="${iterator.image}"></span>
+        </div>`);
+            }
+        }
+
+        // Итоговая сумма
+        function finalChart(shoppingCart) {
+            return shoppingCart.reduce(function (acc, shoppingCart) {
+                return acc + shoppingCart.quantity
+            }, 0)
+        };
+
+        // Итоговое кол-во
+        function finalCost(shoppingCart) {
+            return shoppingCart.reduce(function (acc, shoppingCart) {
+                return acc + (shoppingCart.price * shoppingCart.quantity)
+            }, 0)
+        };
+
+        // Итоговое количество и сумма
+        if (shoppingCart != 0) {
+            const totalPrice = main.insertAdjacentHTML('beforeend',
+                `<hr><div class="prod_item total">В корзине: ${finalChart(shoppingCart)} товаров на сумму 
+    ${finalCost(shoppingCart)} рублей</div>`);
+        }
+
+    </script>
+</body>
+
+</html>
